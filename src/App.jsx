@@ -37,7 +37,6 @@ export class App extends Component {
         activeName: name,
       });
     } catch (error) {
-      debugger
       let errorMessage = "Something went wrong"
       this.setState({ message: errorMessage });
       console.log(error.message)
@@ -136,7 +135,10 @@ export class App extends Component {
         );
         break;
       case "view-tracker":
-        main = <ViewTracker trackedInfo={this.state.trackedInfo} />;
+        main = <ViewTracker 
+          trackedInfo={this.state.trackedInfo} 
+          genresHandler={this.genresHandler}
+          />;
         break;
       default:
         break;

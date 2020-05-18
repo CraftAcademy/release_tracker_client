@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Container, Segment, Grid, Button, List } from "semantic-ui-react";
+import { Container, Grid, List } from "semantic-ui-react";
+import Genres from './Genres'
 
 export class ViewTracker extends Component {
   render() {
@@ -43,7 +44,7 @@ export class ViewTracker extends Component {
         <Grid columns={2} divided fluid relaxed>
           <Grid.Row>
             <Grid.Column>
-              <div></div>
+              <Genres genresHandler={this.props.genresHandler}/>
             </Grid.Column>
             <Grid.Column>
               <h1 id="release-header">Upcoming Releases</h1>
