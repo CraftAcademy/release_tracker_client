@@ -27,7 +27,7 @@ export class App extends Component {
     let id = e.target.dataset.id;
     let name = e.target.text;
     try {
-      const response = await axios.get(`/api/v1/movie_person/${id}`, {
+      const response = await axios.get(`/movie_person/${id}`, {
         params: { genres: this.state.genresSelected },
       });
       let result = response.data.result.movies;
@@ -37,8 +37,10 @@ export class App extends Component {
         activeName: name,
       });
     } catch (error) {
-      let errorMessage = error.response.data.error_message || error.message;
+      debugger
+      let errorMessage = "Something went wrong"
       this.setState({ message: errorMessage });
+      console.log(error.message)
       setTimeout(() => {
         this.setState({ message: "" });
       }, 3000);
@@ -50,7 +52,7 @@ export class App extends Component {
     let headers = sessionStorage.getItem("credentials");
     headers = JSON.parse(headers);
     try {
-      const response = await axios.get("/api/v1/user/", { headers: headers });
+      const response = await axios.get("/movie_person", { headers: headers });
       this.setState({ trackedInfo: response.data.data, page: "view-tracker" });
     } catch (error) {
       let errorMessage = error.response.data.error_message || error.message;

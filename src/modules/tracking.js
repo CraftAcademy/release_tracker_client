@@ -6,13 +6,15 @@ const addToTracked = async (id) => {
 
   try {
     let response = await axios.post(
-      "/api/v1/user_selection",
+      "/user_selection",
       { headers: headers },
-      { movie_person_id: id }
+      { person_id: id }
     );
     return { successful: true, response };
   } catch (error) {
-    return { successful: false, error: error.response.data.errors[0] };
+    let errorMessage
+    error.response.data.errors ? errorMessage = error.response.data.errors[0] : errorMessage = "Something went wrong"
+    return { successful: false, error: errorMessage  }
   }
 };
 
@@ -22,13 +24,15 @@ const removeFromTracked = async (id) => {
 
   try {
     let response = await axios.delete(
-      "/api/v1/user_selection",
+      "/user_selection",
       { headers: headers },
-      { movie_person_id: id }
+      { person_id: id }
     );
     return { successful: true };
   } catch (error) {
-    return { successful: false, error: error.response.data.errors[0] };
+    let errorMessage
+    error.response.data.errors ? errorMessage = error.response.data.errors[0] : errorMessage = "Something went wrong"
+    return { successful: false, error: errorMessage  }
   }
 };
 
@@ -37,7 +41,7 @@ const getUserSelection = async () => {
   headers = JSON.parse(headers);
 
   try {
-    let response = await axios.get("/api/v1/user_selection", {
+    let response = await axios.get("/user_selection", {
       headers: headers,
     });
     return { response: response.data.user_selection };
