@@ -10,11 +10,15 @@ const addToTracked = async (id) => {
   }
 
   try {
-    let response = await axios.post(
+    await axios.post(
       "/user_selection",
-      { headers: headers },
-      { person_id: id }
+      { person_id: id },
+      { headers: headers }
     );
+    let response = await axios.get(
+      "/user_selection",
+      { headers: headers }
+    )
     return { successful: true, response };
   } catch (error) {
     let errorMessage

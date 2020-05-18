@@ -45,11 +45,12 @@ class Search extends Component {
     let imgPath, sResult, button;
     let searchResult = this.state.searchResult;
     let trackedIds = this.props.userTracked.map(
-      (person) => person.movie_person_id
+      (person) => person.id
     );
 
     searchResult &&
       (sResult = searchResult.map((result) => {
+        debugger
         if (this.props.authenticated && !trackedIds.includes(result.id)) {
           button = (
             <td>

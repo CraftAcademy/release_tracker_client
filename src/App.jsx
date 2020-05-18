@@ -53,6 +53,7 @@ export class App extends Component {
     try {
       const response = await axios.get("/movie_person", { headers: headers });
       this.setState({ trackedInfo: response.data.data, page: "view-tracker" });
+      debugger
     } catch (error) {
       let errorMessage = error.response.data.error_message || error.message;
       this.setState({ message: errorMessage });
