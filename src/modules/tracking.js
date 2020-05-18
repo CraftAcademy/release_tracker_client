@@ -3,6 +3,11 @@ import axios from "axios";
 const addToTracked = async (id) => {
   let headers = sessionStorage.getItem("credentials");
   headers = JSON.parse(headers);
+  headers = {
+    ...headers,
+    "Content-type": "application/json",
+    Accept: "application/json"
+  }
 
   try {
     let response = await axios.post(
