@@ -5,6 +5,7 @@ export class MoviePerson extends Component {
     let moviePersonTable;
 
     moviePersonTable = this.props.moviePersonResult.map((result) => {
+      debugger
       let imgPath = result.image;
 
       return (

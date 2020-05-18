@@ -7,6 +7,7 @@ class AccountBar extends Component {
     const response = await logOut()
     if (!response.authenticated){
       this.props.globalAuthHandler(false)
+      this.props.goToPage('search')
     } else {
       console.log("Something went wrong")
     }
@@ -17,7 +18,7 @@ class AccountBar extends Component {
     let buttons;
     if ( authenticated ) {
 
-      buttons = <a id="logout-link" onClick={() => goToPage('search')}>Log out {JSON.parse(sessionStorage.getItem("credentials")).uid}</a>
+      buttons = <a id="logout-link" onClick={() => this.logout()}>Log out {JSON.parse(sessionStorage.getItem("credentials")).uid}</a>
     } else {
       buttons = (
         <nav>

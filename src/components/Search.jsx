@@ -13,7 +13,7 @@ class Search extends Component {
   searchReq = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get("/api/v1/searches", {
+      const response = await axios.get("/searches", {
         params: { q: e.target.children.search.value },
       });
       this.setState({ searchResult: response.data.data });
@@ -45,12 +45,12 @@ class Search extends Component {
     let imgPath, sResult, button;
     let searchResult = this.state.searchResult;
     let trackedIds = this.props.userTracked.map(
-      (person) => person.movie_person_id
+      (person) => person.id
     );
 
     searchResult &&
       (sResult = searchResult.map((result) => {
-        debugger;
+        debugger
         if (this.props.authenticated && !trackedIds.includes(result.id)) {
           button = (
             <td>
@@ -131,10 +131,12 @@ class Search extends Component {
             {sResult}
           </Table>
         </Container>
-        {this.props.authenticated && (
+        {this.props.authenticated ? (
           <Button id="btn-tracker" onClick={(e) => this.props.showTracked(e)}>
             View Your Tracker
           </Button>
+        ) : (
+          <p>Create an account to track multiple people!</p>
         )}
       </Container>
     );

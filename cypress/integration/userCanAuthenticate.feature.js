@@ -56,11 +56,11 @@ describe("User can authenticate", () => {
     it("successfully with good credentials", () => {
       cy.route({
         method: "POST",
-        url: "http://localhost:3000/api/v1/auth/sign_up",
+        url: "http://localhost:3000/api/v1/auth",
         status: 200,
         response: "fixture:register.json",
         headers: {
-          uid: "user@mail.com",
+          uid: "newuser@mail.com",
         },
       });
       cy.get("#signup-form").within(() => {
@@ -75,7 +75,7 @@ describe("User can authenticate", () => {
     it("but unsuccessfully with bad credentials", () => {
       cy.route({
         method: "POST",
-        url: "http://localhost:3000/api/v1/auth/sign_up",
+        url: "http://localhost:3000/api/v1/auth",
         status: 401,
         response: { error: "Passwords don't match", success: false },
       });
@@ -87,5 +87,40 @@ describe("User can authenticate", () => {
       });
       cy.get("#signup-message").should("contain", "Passwords don't match");
     });
+  });
+
+  describe('User can log out', () => {
+    beforeEach(() => {
+      cy.route({
+        method: "POST",
+        url: "http://localhost:3000/api/v1/auth",
+        status: 200,
+        response: "fixture:register.json",
+        headers: {
+          uid: "newuser@mail.com",
+        },
+      });
+      cy.route({
+        method: "DELETE",
+        url: "http://localhost:3000/api/v1/auth",
+        status: 200,
+        headers: {
+          uid: "newuser@mail.com",
+        },
+      })
+      cy.get("a#signup-link").click();
+      cy.get("#signup-form").within(() => {
+        cy.get("#email").type("newuser@mail.com");
+        cy.get("#password").type("password123");
+        cy.get("#password_confirmation").type("password123");
+        cy.get("#submit").click();
+      });
+    })
+    
+    it('clicking the logout link', () => {
+      cy.get("#account-bar").should("contain", "Log out newuser@mail.com");
+      cy.get('#logout-link').click()
+      cy.get('#account-bar').should('contain', 'Login | Sign Up')
+    })
   });
 });
